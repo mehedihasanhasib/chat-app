@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\TestEvent;
+use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -27,9 +28,16 @@ Route::get('event', function () {
 
 
 Route::prefix('/admin')->group(function () {
-    Route::get('/dashboard', function () {
+    Route::get('/', function () {
         return view('admin.admin-dashboard');
-    });
+    })->name('admin.dashboard')->middleware('admin');
+
+    Route::get('/login', function () {
+        return view('admin.auth.login');
+    })->name('admin.login');
+
+    Route::post('/login', [AdminLoginController::class, 'login'])
+        ->name('admin.login');
 });
 
 
