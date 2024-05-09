@@ -5,8 +5,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://unpkg.com/tailwindcss@0.3.0/dist/tailwind.min.css" rel="stylesheet">
     <title>Admin</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -73,14 +75,14 @@
                                 <div class="ml-4 flex-1 border-b border-grey-lighter py-4">
                                     <div class="flex items-bottom justify-between">
                                         <p class="text-grey-darkest">
-                                            New Movie! Expendables 4
+                                            Admin
                                         </p>
                                         <p class="text-xs text-grey-darkest">
                                             12:45 pm
                                         </p>
                                     </div>
                                     <p class="text-grey-dark mt-1 text-sm">
-                                        Get Andrés on this movie ASAP!
+                                        {{-- Get Andrés on this movie ASAP! --}}
                                     </p>
                                 </div>
                             </div>
@@ -138,10 +140,10 @@
                         </div>
 
                         <!-- Messages -->
-                        <div class="flex-1 overflow-auto" style="background-color: #DAD3CC">
+                        <div class="flex-1 overflow-auto" style="background-color: #DAD3CC" id="message-box">
                             <div class="py-2 px-3">
 
-                                <div class="flex justify-center mb-2">
+                                {{-- <div class="flex justify-center mb-2">
                                     <div class="rounded py-2 px-4" style="background-color: #DDECF2">
                                         <p class="text-sm uppercase">
                                             February 20, 2018
@@ -226,9 +228,9 @@
                                             12:45 pm
                                         </p>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="flex justify-end mb-2">
+                                {{-- <div class="flex justify-end mb-2">
                                     <div class="rounded py-2 px-3" style="background-color: #E2F7CB">
                                         <p class="text-sm mt-1">
                                             Hi guys.
@@ -237,20 +239,11 @@
                                             12:45 pm
                                         </p>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="flex justify-end mb-2">
-                                    <div class="rounded py-2 px-3" style="background-color: #E2F7CB">
-                                        <p class="text-sm mt-1">
-                                            Count me in
-                                        </p>
-                                        <p class="text-right text-xs text-grey-dark mt-1">
-                                            12:45 pm
-                                        </p>
-                                    </div>
-                                </div>
 
-                                <div class="flex mb-2">
+
+                                {{-- <div class="flex mb-2">
                                     <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
                                         <p class="text-sm text-purple">
                                             Tom Cruise
@@ -262,13 +255,15 @@
                                             12:45 pm
                                         </p>
                                     </div>
-                                </div>
+                                </div> --}}
 
                             </div>
                         </div>
 
                         <!-- Input -->
-                        <div class="bg-grey-lighter px-4 py-4 flex items-center">
+                        <form class="bg-grey-lighter px-4 py-4 flex items-center">
+
+                            <!-- imojie selector -->
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
                                     height="24">
@@ -277,20 +272,30 @@
                                     </path>
                                 </svg>
                             </div>
-                            <div class="flex-1 mx-4">
-                                <input class="w-full border rounded px-2 py-2" type="text" />
-                            </div>
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
-                                    height="24">
-                                    <path fill="#263238" fill-opacity=".45"
-                                        d="M11.999 14.942c2.001 0 3.531-1.53 3.531-3.531V4.35c0-2.001-1.53-3.531-3.531-3.531S8.469 2.35 8.469 4.35v7.061c0 2.001 1.53 3.531 3.53 3.531zm6.238-3.53c0 3.531-2.942 6.002-6.237 6.002s-6.237-2.471-6.237-6.002H3.761c0 4.001 3.178 7.297 7.061 7.885v3.884h2.354v-3.884c3.884-.588 7.061-3.884 7.061-7.885h-2z">
-                                    </path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
 
+                            <!-- input field -->
+                            <div class="flex-1 mx-4">
+                                <textarea rows="1" class="w-full h-11 overflow-y-hidden border rounded px-2 py-2 resize-none" type="text"
+                                    name="inputField" id="inputField">
+                                </textarea>
+                            </div>
+
+                            <!-- send button -->
+                            <button type="submit" id="send-button" style="cursor: pointer;">
+                                <svg width="28px" height="28px" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg" stroke="#969ea2">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path
+                                            d="M10.3009 13.6949L20.102 3.89742M10.5795 14.1355L12.8019 18.5804C13.339 19.6545 13.6075 20.1916 13.9458 20.3356C14.2394 20.4606 14.575 20.4379 14.8492 20.2747C15.1651 20.0866 15.3591 19.5183 15.7472 18.3818L19.9463 6.08434C20.2845 5.09409 20.4535 4.59896 20.3378 4.27142C20.2371 3.98648 20.013 3.76234 19.7281 3.66167C19.4005 3.54595 18.9054 3.71502 17.9151 4.05315L5.61763 8.2523C4.48114 8.64037 3.91289 8.83441 3.72478 9.15032C3.56153 9.42447 3.53891 9.76007 3.66389 10.0536C3.80791 10.3919 4.34498 10.6605 5.41912 11.1975L9.86397 13.42C10.041 13.5085 10.1295 13.5527 10.2061 13.6118C10.2742 13.6643 10.3352 13.7253 10.3876 13.7933C10.4468 13.87 10.491 13.9585 10.5795 14.1355Z"
+                                            stroke="#969ea2" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </g>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -299,11 +304,72 @@
 
 
     <script>
-        // broadcast message
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('#inputField').on('input', function() {
+            $(this).css('height', '44px'); // Reset height to auto
+            $(this).css('height', $(this)[0].scrollHeight + 'px'); // Set height to scroll height
+            $(this).scrollTop($(this)[0].scrollHeight); // Scroll to the bottom
+        });
+
+        $('#send-button').click(function(e) {
+            e.preventDefault()
+            $.ajax({
+                url: `{{ url('send-message') }}`,
+                type: "POST",
+                dataType: "json",
+                data: {
+                    message: $('#inputField').val()
+                },
+                success: function(res) {
+                    $('#message-box').append(
+                        `
+                                <div class="flex justify-end mb-2 mr-2">
+                                    <div class="rounded pb-2 px-3 max-w-md" style="background-color: #E2F7CB">
+                                        <p class="text-sm whitespace-pre-line">
+                                           ${res.msg}
+                                        </p>
+                                        <p class="text-right text-xs text-grey-dark mt-1">
+                                            12:45 pm
+                                        </p>
+                                    </div>
+                                </div>
+                        `
+                    )
+                    $('#message-box').scrollTop($('#message-box')[0].scrollHeight);
+                }
+            });
+            $('#inputField').val('')
+            $('#inputField').css('height', '44px')
+        });
+
+        // listen broadcasted msg
         setTimeout(() => {
-            window.Echo.channel('test-channel')
-                .listen('.App\\Events\\TestEvent', (res) => {
-                    console.log(res);
+            window.Echo.channel('send-message')
+                .listen('.App\\Events\\SendMessageEvent', (res) => {
+
+                    if (res.user_id) {
+                        $('#message-box').append(
+                            `
+                                <div class="flex mb-2 ml-2">
+                                    <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
+                                        <p class="text-sm mt-1">
+                                            ${res.message}
+                                        </p>
+                                        <p class="text-right text-xs text-grey-dark mt-1">
+                                            12:45 pm
+                                        </p>
+                                    </div>
+                                </div>
+                        `
+                        )
+
+                        $('#message-box').scrollTop($('#message-box')[0].scrollHeight);
+                    }
                 })
         }, 500);
     </script>

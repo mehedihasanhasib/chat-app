@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\TestEvent;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use PHPUnit\Util\Test;
@@ -30,6 +31,9 @@ Route::prefix('/admin')->group(function () {
         return view('admin.admin-dashboard');
     });
 });
+
+
+Route::post('/send-message', [ChatController::class, 'send_message']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
