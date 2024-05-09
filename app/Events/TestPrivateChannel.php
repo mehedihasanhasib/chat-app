@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TestEvent implements ShouldBroadcast
+class TestPrivateChannel implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -21,11 +20,9 @@ class TestEvent implements ShouldBroadcast
      * @return void
      */
     public $msg;
-
     public function __construct()
     {
-
-        $this->msg = "Its Working.....";
+        $this->msg = "Private Channel Working .......";
     }
 
     /**
@@ -35,6 +32,6 @@ class TestEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('test-channel');
+        return new PrivateChannel('privateChannel');
     }
 }

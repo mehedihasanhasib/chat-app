@@ -11,7 +11,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class=" h-screen overflow-hidden flex items-center justify-center" style="background: #edf2f7;">
+<body class="h-screen overflow-hidden flex items-center justify-center" style="background: #edf2f7;">
     <div class="w-full">
         <div class="w-full h-32" style="background-color: #449388"></div>
 
