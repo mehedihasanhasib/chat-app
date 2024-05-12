@@ -144,123 +144,13 @@
                         <div class="flex-1 overflow-auto" style="background-color: #DAD3CC" id="message-box">
                             <div class="py-2 px-3">
 
-                                {{-- <div class="flex justify-center mb-2">
-                                    <div class="rounded py-2 px-4" style="background-color: #DDECF2">
-                                        <p class="text-sm uppercase">
-                                            February 20, 2018
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="flex justify-center mb-4">
-                                    <div class="rounded py-2 px-4" style="background-color: #FCF4CB">
-                                        <p class="text-xs">
-                                            Messages to this chat and calls are now secured with end-to-end encryption.
-                                            Tap for more info.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="flex mb-2">
-                                    <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
-                                        <p class="text-sm text-teal">
-                                            Sylverter Stallone
-                                        </p>
-                                        <p class="text-sm mt-1">
-                                            Hi everyone! Glad you could join! I am making a new movie.
-                                        </p>
-                                        <p class="text-right text-xs text-grey-dark mt-1">
-                                            12:45 pm
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="flex mb-2">
-                                    <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
-                                        <p class="text-sm text-purple">
-                                            Tom Cruise
-                                        </p>
-                                        <p class="text-sm mt-1">
-                                            Hi all! I have one question for the movie
-                                        </p>
-                                        <p class="text-right text-xs text-grey-dark mt-1">
-                                            12:45 pm
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="flex mb-2">
-                                    <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
-                                        <p class="text-sm text-orange">
-                                            Harrison Ford
-                                        </p>
-                                        <p class="text-sm mt-1">
-                                            Again?
-                                        </p>
-                                        <p class="text-right text-xs text-grey-dark mt-1">
-                                            12:45 pm
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="flex mb-2">
-                                    <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
-                                        <p class="text-sm text-orange">
-                                            Russell Crowe
-                                        </p>
-                                        <p class="text-sm mt-1">
-                                            Is Andrés coming for this one?
-                                        </p>
-                                        <p class="text-right text-xs text-grey-dark mt-1">
-                                            12:45 pm
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="flex mb-2">
-                                    <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
-                                        <p class="text-sm text-teal">
-                                            Sylverter Stallone
-                                        </p>
-                                        <p class="text-sm mt-1">
-                                            He is. Just invited him to join.
-                                        </p>
-                                        <p class="text-right text-xs text-grey-dark mt-1">
-                                            12:45 pm
-                                        </p>
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="flex justify-end mb-2">
-                                    <div class="rounded py-2 px-3" style="background-color: #E2F7CB">
-                                        <p class="text-sm mt-1">
-                                            Hi guys.
-                                        </p>
-                                        <p class="text-right text-xs text-grey-dark mt-1">
-                                            12:45 pm
-                                        </p>
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="flex mb-2">
-                                    <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
-                                        <p class="text-sm text-purple">
-                                            Tom Cruise
-                                        </p>
-                                        <p class="text-sm mt-1">
-                                            Get Andrés on this movie ASAP!
-                                        </p>
-                                        <p class="text-right text-xs text-grey-dark mt-1">
-                                            12:45 pm
-                                        </p>
-                                    </div>
-                                </div> --}}
+                                <!-- CHAT SECTION -->
 
                             </div>
                         </div>
 
                         <!-- Input -->
-                        <form class="bg-grey-lighter px-4 py-4 flex items-center">
+                        <form class="bg-grey-lighter px-4 py-4 flex items-center" id="message-form">
 
                             <!-- imojie selector -->
                             <div>
@@ -301,6 +191,23 @@
     </div>
 
     @yield('script')
+
+    <script>
+        $('#inputField').val($.trim($('#inputField').val()))
+
+        $('#inputField').on('input', function(event) {
+            $(this).css('height', '48px'); // Reset height to auto
+            $(this).css('height', $(this)[0].scrollHeight + 'px'); // Set height to scroll height
+            $(this).scrollTop($(this)[0].scrollHeight); // Scroll to the bottom
+        });
+
+        $('#inputField').on('keydown', function(event) {
+            if (event.which == 13 && !event.shiftKey) { // If Enter key is pressed without Shift
+                event.preventDefault(); // Prevent default Enter behavior (adding a new line)
+                $('#message-form').submit();
+            }
+        });
+    </script>
 </body>
 
 </html>
