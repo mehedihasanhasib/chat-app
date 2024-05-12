@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -17,6 +19,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('send-message', function () {
+Broadcast::channel('send-message', function (User $users, Admin $admins) {
     return true;
 });

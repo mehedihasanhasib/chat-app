@@ -9,14 +9,25 @@ use App\Models\Admin;
 
 class AdminLoginController extends Controller
 {
+
+    public function index()
+    {
+        return view('admin.admin-dashboard');
+    }
+
+    public function login_page()
+    {
+        return view('admin.auth.login');
+    }
+
     public function login(LoginRequest $request)
     {
         $credentials = $request->only(['email', 'password']);
-        $admin = Admin::where('email', $credentials['email'])->get()->first();
-        // dd($admin);
+
         if (Auth::guard('admin')->attempt($credentials)) {
+            $admin = Admin::where('email', $credentials['email'])->first();
+            Auth::guard('admin')->login($admin);
             $request->session()->regenerate();
-            Auth::login($admin);
             return redirect()->route('admin.dashboard');
         } else {
             return back()->with('error', 'Invalid email or password');

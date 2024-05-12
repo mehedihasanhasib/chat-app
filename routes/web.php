@@ -3,6 +3,7 @@
 use App\Events\TestEvent;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use PHPUnit\Util\Test;
@@ -28,16 +29,14 @@ Route::get('event', function () {
 
 
 Route::prefix('/admin')->group(function () {
-    Route::get('/', function () {
-        return view('admin.admin-dashboard');
-    })->name('admin.dashboard')->middleware('admin');
-
-    Route::get('/login', function () {
-        return view('admin.auth.login');
-    })->name('admin.login');
-
-    Route::post('/login', [AdminLoginController::class, 'login'])
-        ->name('admin.login');
+    // load admin dashboard
+    Route::get('/', [AdminLoginController::class, 'index'])->name('admin.dashboard')->middleware('admin');
+    // load login page
+    Route::get('/login', [AdminLoginController::class, 'login_page'])->name('admin.login');
+    // login
+    Route::post('/login', [AdminLoginController::class, 'login'])->name('admin.login');
+    // load contacts
+    Route::get('/contacts', [ContactController::class, 'load_contacts']);
 });
 
 

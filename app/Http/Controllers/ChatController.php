@@ -13,6 +13,7 @@ class ChatController extends Controller
 {
     public function send_message(Request $request)
     {
+
         if (!isset($request->message)) {
             return response()->json([
                 'status' => 0
