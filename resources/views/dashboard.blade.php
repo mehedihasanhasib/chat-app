@@ -43,15 +43,15 @@
 
         // listen broadcasted msg
         setTimeout(() => {
-            window.Echo.channel('send-message')
+            window.Echo.private('send-message')
                 .listen('.App\\Events\\SendMessageEvent', (res) => {
 
                     if (!res.user_id) {
                         $('#message-box').append(
                             `
                                 <div class="flex mb-2 ml-2">
-                                    <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
-                                        <p class="text-sm mt-1">
+                                    <div class="rounded pb-2 px-3" style="background-color: #F2F2F2">
+                                        <p class="text-sm whitespace-pre-line">
                                             ${res.message}
                                         </p>
                                         <p class="text-right text-xs text-grey-dark mt-1">

@@ -26,6 +26,6 @@ class SendMessageEvent implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new Channel('send-message');
+        return new PrivateChannel('send-message');
     }
 }

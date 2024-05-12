@@ -43,7 +43,7 @@
 
         // listen broadcasted msg
         setTimeout(() => {
-            window.Echo.channel('send-message')
+            window.Echo.private('send-message')
                 .listen('.App\\Events\\SendMessageEvent', (res) => {
 
                     if (res.user_id) {
